@@ -7,6 +7,7 @@ import com.example.SplitWiseMachineCoding.models.User;
 import com.example.SplitWiseMachineCoding.repository.ExpenseGroupRepository;
 import com.example.SplitWiseMachineCoding.repository.ExpenseRepository;
 import com.example.SplitWiseMachineCoding.repository.SplitRepository;
+import com.example.SplitWiseMachineCoding.services.strategies.SplitStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class ExpenseService implements IExpenseService{
     private final ExpenseGroupRepository groupRepository;
 
     private final SplitRepository splitRepository;
+    private final Map<String,SplitStrategy> strategyMap;
 
     @Override
     public Expense addExpense(Expense expense, Map<Long, Double> paidMap, Map<Long, Double> percentageMap) {
@@ -42,8 +44,7 @@ public class ExpenseService implements IExpenseService{
 
 
         }
-
-      Expense newExpense= expenseRepository.save(expense);
+        expenseRepository.save(expense);
 
 
         // calculate the splits
@@ -51,23 +52,15 @@ public class ExpenseService implements IExpenseService{
 
 
         //save the splits
+        SplitStrategy strategy=strategyMap.get(expense.getSplitType().name());
+        if(strategy==null)throw new IllegalArgumentException("strategy not found");
 
-        List<Split> splits=new ArrayList<>();
-        for(User user:users){
-            Split split=new Split();
-            split.setExpense(expense);
-            split.setUser(user);
+        List<Split> splits=strategy.calculateSplits(expense,users,paidMap,percentageMap);
+        splitRepository.saveAll(splits);
+        expense.setSplits(splits);
 
-            Double paid=paidMap.getOrDefault(user.getId(),0.0);
 
-            Double owed=expense.getTotalAmount()/ users.size();
-
-            split.setOwed(owed);
-            split.setPaid(paid);
-
-            splitRepository.saveAll(splits);
-
-            return newExpense;
+            return expense;
 
         }
 

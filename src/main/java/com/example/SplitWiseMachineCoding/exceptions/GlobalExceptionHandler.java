@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<String> handleUserNotFound(UserNotFoundException exception){
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(exception.getMessage());
+
+              .body(exception.getMessage());
     }
     @ExceptionHandler(GroupNotFoundException.class)
     public ResponseEntity<String> handleGroupNotFound(GroupNotFoundException ex) {
@@ -29,5 +29,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleUserNotInGroup(UserNotInGroupException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidExpenseException.class)
+    public ResponseEntity<String> handleUserNotFound(InvalidExpenseException exception){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+
+                .body(exception.getMessage());
     }
 }

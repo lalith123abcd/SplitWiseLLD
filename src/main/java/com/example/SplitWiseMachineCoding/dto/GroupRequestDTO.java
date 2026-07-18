@@ -9,6 +9,7 @@ import java.util.List;
 
 public class GroupRequestDTO {
 
+    private  String creatorId;
     private String name;
     private List<User> users;
 }

@@ -3,10 +3,12 @@ package com.example.SplitWiseMachineCoding.services.strategies;
 import com.example.SplitWiseMachineCoding.models.Expense;
 import com.example.SplitWiseMachineCoding.models.Split;
 import com.example.SplitWiseMachineCoding.models.User;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+@Service("EQUAL")
 
 public class EqualSplitStrategy implements SplitStrategy{
     @Override
@@ -28,7 +30,7 @@ public class EqualSplitStrategy implements SplitStrategy{
             split.setPaid(paid);
             splits.add(split);
         }
-            return splits;
+            return  splits;
 
         }
 

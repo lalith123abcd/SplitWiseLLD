@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name = "expense")
 public class Expense extends BaseEntity{
 
     private String description;
@@ -27,11 +29,12 @@ public class Expense extends BaseEntity{
 
     @ManyToOne
 
+
     @JoinColumn(name="group_id")
     private ExpenseGroup group;
 
     @ManyToOne
-    @Column(name = "created_by",nullable = false)
+    @JoinColumn(name = "created_by",nullable = false)
     private User createdBy;
 
 

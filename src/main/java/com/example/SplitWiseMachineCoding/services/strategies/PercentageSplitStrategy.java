@@ -4,10 +4,12 @@ import com.example.SplitWiseMachineCoding.exceptions.InvalidExpenseException;
 import com.example.SplitWiseMachineCoding.models.Expense;
 import com.example.SplitWiseMachineCoding.models.Split;
 import com.example.SplitWiseMachineCoding.models.User;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+@Service("PERCENTAGE")
 
 public class PercentageSplitStrategy implements SplitStrategy {
     @Override

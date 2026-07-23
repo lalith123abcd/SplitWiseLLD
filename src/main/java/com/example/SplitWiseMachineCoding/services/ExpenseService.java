@@ -11,25 +11,22 @@ import com.example.SplitWiseMachineCoding.services.strategies.SplitStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class ExpenseService implements IExpenseService{
     private final ExpenseRepository expenseRepository;
     private final ExpenseGroupRepository groupRepository;
 
     private final SplitRepository splitRepository;
-    private final Map<String,SplitStrategy> strategyMap;
+    private final Map<String, SplitStrategy> strategyMap;
 
     @Override
     public Expense addExpense(Expense expense, Map<Long, Double> paidMap, Map<Long, Double> percentageMap) {
-
+        System.out.println("Total Amount = " + expense.getTotalAmount());
         List<User> users;
         //get users involved
 
@@ -60,11 +57,11 @@ public class ExpenseService implements IExpenseService{
         expense.setSplits(splits);
 
 
-            return expense;
-
-        }
+        return expense;
 
     }
+
+
 
     @Override
     public List<Expense> getUserExpenses(Long userId) {
@@ -73,3 +70,5 @@ public class ExpenseService implements IExpenseService{
                 .collect(Collectors.toList());
     }
 }
+
+

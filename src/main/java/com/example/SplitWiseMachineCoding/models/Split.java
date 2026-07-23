@@ -1,10 +1,7 @@
 package com.example.SplitWiseMachineCoding.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -13,7 +10,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Split {
+@Table(name = "split")
+public class Split extends  BaseEntity {
     @ManyToOne
     @JoinColumn(name = "expense_id", nullable = false)
     @JsonBackReference
